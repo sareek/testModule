@@ -1,0 +1,68 @@
+/*
+ *
+ * {{properCase name }}
+ *
+ */
+
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+{{#if wantHeaders}}
+import { Helmet } from 'react-helmet';
+{{/if}}
+{{#if wantMessages}}
+import { FormattedMessage } from 'react-intl';
+{{/if}}
+{{#if wantActionsAndReducer}}
+import { createStructuredSelector } from 'reselect';
+import {
+  makeSelectRequesting, makeSelectError, makeSelectResponse, makeSelectSuccess
+} from './selectors';
+{{/if}}
+{{#if wantMessages}}
+import messages from './messages';
+{{/if}}
+
+class {{ properCase name }} extends React.{{{ component }}} { // eslint-disable-line react/prefer-stateless-function
+  state = {};
+  render() {
+    const {} = this.state;
+    const {} = this.props;
+    return (
+      <div>
+      {{#if wantHeaders}}
+        <Helmet>
+          <title>{{properCase name}}</title>
+          <meta name="description" content="Description of {{properCase name}}" />
+        </Helmet>
+      {{/if}}
+      {{#if wantMessages}}
+        <FormattedMessage {...messages.header} />
+      {{/if}}
+      </div>
+    );
+  }
+}
+
+{{ properCase name }}.propTypes = {
+  isRequesting: PropTypes.bool.isRequired,
+  isSuccess: PropTypes.bool.isRequired,
+  errorResponse: PropTypes.string.isRequired,
+  successResponse: PropTypes.string.isRequired,
+};
+
+{{#if wantActionsAndReducer}}
+const mapStateToProps = createStructuredSelector({
+  {{name}}: makeSelect{{properCase name}}(),
+});
+{{/if}}
+
+const mapDispatchToProps = (dispatch) => ({
+
+});
+
+{{#if wantActionsAndReducer}}
+export default connect(mapStateToProps, mapDispatchToProps)({{ properCase name }});
+{{else}}
+export default connect(null, mapDispatchToProps)({{ properCase name }});
+{{/if}}
